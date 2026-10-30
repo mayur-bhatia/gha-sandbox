@@ -1,10 +1,13 @@
 name: GHA Demo
 
 on:
-  push
+  push:
+  workflow_dispatch: 
 
 jobs:
   print:
+    name: Print
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello from ${{  github.ref }} at ${{  github.sha }}"
+      - run: echo "Hello from ${{  github.ref_name }} at ${{  github.sha }}
+      - run: echo "JSON \n ${{ toJson(github) }}"
