@@ -35,5 +35,8 @@ jobs:
           echo "$GITHUB_CONTEXT"
       
       - name: Log the env and dry run
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          echo "Deployong to ${{ inputs.environment }} (dry run: ${{ inputs.dry_run }})"
+          echo "Deploying to $ENVIRONMENT (dry run: $DRY_RUN)"
