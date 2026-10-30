@@ -9,5 +9,5 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello from ${{  github.ref_name }} at ${{  github.sha }}
+      - run: echo "Hello from ${{  github.ref_name }} at ${{  github.sha }}"
       - run: echo "JSON \n ${{ toJson(github) }}"
