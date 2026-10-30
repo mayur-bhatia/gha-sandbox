@@ -1,0 +1,10 @@
+name: GHA Demo
+
+on:
+  push
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This is first job"
