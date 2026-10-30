@@ -7,4 +7,4 @@ jobs:
   print:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello from ${{  github.ref }}"
+      - run: echo "Hello from ${{  github.ref }} at {{  github.sha }}"
