@@ -33,3 +33,7 @@ jobs:
         run: |
           echo "JSON:"
           echo "$GITHUB_CONTEXT"
+      
+      - name: Log the env and dry run
+        run: |
+          echo "Deployong to ${{ inputs.environment }} (dry run: ${{ inputs.dry_run }})"
