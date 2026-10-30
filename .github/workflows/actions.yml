@@ -2,7 +2,20 @@ name: GHA Demo
 
 on:
   push:
-  workflow_dispatch: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run"
+        default: qa
+        type: choice
+        options:
+          - prod
+          - qa
+      dry_run:
+        description: Dry run?
+        default: true
+        type: boolean
+
 
 jobs:
   print:
