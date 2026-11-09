@@ -19,10 +19,11 @@ jobs:
       - name: "Print version"
         run: |
           echo "Printing version from output ${{ steps.ver.outputs.version }}"
-          echo "Printing version from env $VERSION"
+          echo "Printing version from bash env $VERSION"
+          echo "Printing version from GH env ${{ env.VERSION  }}"
     outputs:
       version_from_step: ${{ steps.ver.outputs.version }}
-      version_from_env: $VERSION
+      version_from_env: ${{ env.VERSION }}
 
   report:
     name: Report
