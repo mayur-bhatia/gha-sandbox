@@ -12,11 +12,14 @@ jobs:
       - name: "Determine version"
         id: ver
         env:
-          VERSION: ${{ github.run_number }}
+          RUN_VERSION: ${{ github.run_number }}
         run: |
-          echo "version=1.0.$VERSION" >> "$GITHUB_OUTPUT"
+          echo "version=1.0.$RUN_VERSION" >> "$GITHUB_OUTPUT"
+          echo "VERSION=1.0.$RUN_VERSION" >> "$GITHUB_ENV"
       - name: "Print version"
-        run: echo "Version is ${{ steps.ver.outputs.version }}"
+        run: |
+          echo "Printing version from output ${{ steps.ver.outputs.version }}"
+          echo "Printing version from env $VERSION"
   # report:
   #   name: Report
   #   runs-on: ubuntu-latest
