@@ -20,10 +20,16 @@ jobs:
         run: |
           echo "Printing version from output ${{ steps.ver.outputs.version }}"
           echo "Printing version from bash env $VERSION"
-          echo "Printing version from GH env ${{ env.VERSION  }}"
+          echo "This file contains version" > /tmp/version.txt
+          echo "VERSION=$VERSION" >> /tmp/version.txt
+      - name: Upload version file
+        uses: actions/upload-artifact@v4
+        with:
+          name: version-file
+          path: /tmp/version.txt
     outputs:
       version_from_step: ${{ steps.ver.outputs.version }}
-      version_from_env: ${{ env.VERSION }}
+
 
   report:
     name: Report
@@ -33,4 +39,3 @@ jobs:
       - name: Log built version
         run: |
           echo "Version from version_from_step: ${{ needs.build.outputs.version_from_step }}"
-          echo "Version from version_from_env: ${{ needs.build.outputs.version_from_env }}"
