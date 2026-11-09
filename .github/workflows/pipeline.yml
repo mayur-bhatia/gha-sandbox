@@ -20,10 +20,16 @@ jobs:
         run: |
           echo "Printing version from output ${{ steps.ver.outputs.version }}"
           echo "Printing version from env $VERSION"
-  # report:
-  #   name: Report
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: "Dump version"
-  #       run: |
-  #         echo "Version is ${{ steps.ver.outputs.version }}"
+    outputs:
+      version_from_step: ${{ steps.ver.outputs.version }}
+      version_from_env: $VERSION
+
+  report:
+    name: Report
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Log built version
+        run: |
+          echo "Version from version_from_step: ${{ needs.build.outputs.version_from_step }}"
+          echo "Version from version_from_env: ${{ needs.build.outputs.version_from_env }}"
