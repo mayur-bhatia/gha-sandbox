@@ -1,0 +1,26 @@
+name: Pipeline
+
+on:
+  push:
+  workflow_dispatch: 
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Determine version"
+        id: ver
+        env:
+          VERSION: ${{ github.run_number }}
+        run: |
+          echo "version=1.0.$VERSION" >> "$GITHUB_OUTPUT"
+      - name: "Print version"
+        run: echo "Version is ${{ steps.ver.outputs.version }}"
+  # report:
+  #   name: Report
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: "Dump version"
+  #       run: |
+  #         echo "Version is ${{ steps.ver.outputs.version }}"
