@@ -36,6 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Download version file
+        uses: actions/download-artifact@v4
+        with:
+          name: version-file
       - name: Log built version
         run: |
           echo "Version from version_from_step: ${{ needs.build.outputs.version_from_step }}"
+          cat version.txt
