@@ -22,8 +22,9 @@ jobs:
         env:
           SHOULD_FAIL: ${{ inputs.should_fail }}
         run: |
-          if $SHOULD_FAIL
-          exit 1
+          if [ $SHOULD_FAIL ]
+            exit 1
+          fi
       
       - name: prepare report
         run: |
