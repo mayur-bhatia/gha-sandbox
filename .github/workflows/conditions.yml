@@ -19,9 +19,9 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    if: ${{ inputs.should_fail }}
     steps:
       - run: |
-          if ${{ inputs.should_fail }}
           exit 1
   upload:
     name: Upload report
