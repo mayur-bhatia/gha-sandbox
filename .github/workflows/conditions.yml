@@ -22,7 +22,7 @@ jobs:
         env:
           SHOULD_FAIL: ${{ inputs.should_fail }}
         run: |
-          if [ $SHOULD_FAIL ]
+          if [ "$SHOULD_FAIL" == "true" ]; then
             exit 1
           fi
       
