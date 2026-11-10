@@ -5,7 +5,7 @@ on:
     inputs:
       should_fail:
         type: boolean
-        default: true
+        default: false
 
 jobs:
   ci:
@@ -19,9 +19,15 @@ jobs:
           exit 1
 
       - name: Test
-        if: ${{ inputs.should_fail }}
+        env:
+          SHOULD_FAIL: ${{ inputs.should_fail }}
         run: |
+          if $SHOULD_FAIL
           exit 1
+      
+      - name: prepare report
+        run: |
+          echo "The test results are here" > report.txt
 
       - name: Upload report
         if: ${{ !cancelled() }}
@@ -40,46 +46,3 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "Cleaning up"
-
-
-  # lint:
-  #   name: Lint
-  #   runs-on: ubuntu-latest
-  #   continue-on-error: true
-  #   steps:
-  #     - run: |
-  #         echo "Always fail"
-  #         exit 1
-  # test:
-  #   name: Test
-  #   runs-on: ubuntu-latest
-  #   if: ${{ inputs.should_fail }}
-  #   steps:
-  #     - run: |
-  #         exit 1
-  # upload:
-  #   name: Upload report
-  #   runs-on: ubuntu-latest
-  #   if: ${{ !cancelled() }}
-  #   steps:
-  #     - name: Create report
-  #       run: echo "Report are here" > report.txt
-  #     - name: Upload report
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: report
-  #         path: report.txt
-  # alert:
-  #   name: alert
-  #   runs-on: ubuntu-latest
-  #   if: ${{ failure() }}
-  #   steps:
-  #     - name: print alert
-  #       run: echo "ALERT"
-  # clean:
-  #   name: clean
-  #   runs-on: ubuntu-latest
-  #   if: ${{ always() }}
-  #   steps:
-  #     - name: Cleanup
-  #       run: echo "Cleaning up"
