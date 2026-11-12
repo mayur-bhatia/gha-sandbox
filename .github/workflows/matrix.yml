@@ -1,0 +1,49 @@
+name: Matrix
+
+on: 
+  workflow_dispatch: 
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: determine version
+        id: det_ver
+        run: |
+          echo "BUILD_VERSION= ${{ github.run_number }}" >> $GITHUB_OUTPUT
+      - name: print version
+        run: |
+          echo "Dumping version: ${{ steps.det_ver.outputs.BUILD_VERSION }}"
+    outputs:
+      BUILD_VERSION: ${{ steps.det_ver.outputs.BUILD_VERSION }}
+
+  test:
+    name: test
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.10, 3.11, 3.12]
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python: ${{ matrix.python }}
+      - name: Running tests
+        env:
+          PYTHON_VERSION: ${{ matrix.python }}
+        run: |
+          echo "Testing ${{ needs.build.outputs.BUILD_VERSION }} on $PYTHON_VERSION "
+          if [ "$PYTHON_VERSION"=3.11 ]; then
+            exit 1
+          fi
+
+  report:
+    name: report
+    needs: test
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
+      - name: Print result
+        run: |
+          echo "Results: ${{ needs.test.result }}"

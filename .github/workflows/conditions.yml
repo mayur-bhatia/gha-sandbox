@@ -27,6 +27,7 @@ jobs:
           fi
       
       - name: prepare report
+        if: ${{ !cancelled() }}
         run: |
           echo "The test results are here" > report.txt
 
